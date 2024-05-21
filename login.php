@@ -6,7 +6,7 @@ if (isset($_SESSION["logged"])) {
   die;
 }
 
-require_once "connect.php";
+//require_once "connect.php";
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
   $username = $_POST["username"];

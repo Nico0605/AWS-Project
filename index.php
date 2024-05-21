@@ -133,21 +133,24 @@ if (!isset($_SESSION["logged"])) {
             <div class="container">
                 <h1>Configurazione EC2</h1>
                 <h2>Installazione Docker</h2>
-                <p>Di seguito riporto i comandi che ho utilizzato per aggiornare le repositories di apt:</p>
+                <p>Per aggiornare le repository di apt, utilizzare i seguenti comandi:</p>
                 <pre>
-            <code>sudo apt-get update
+                    <code>sudo apt-get update
 sudo apt-get install -y ca-certificates curl
 sudo install -m 0755 -d /etc/apt/keyrings
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
 sudo chmod a+r /etc/apt/keyrings/docker.asc
-
-echo \
+                    </code>
+                </pre>
+                <p>Aggiungere il repository di Docker:</p>
+                <pre>
+                    <code> echo \
 "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
 $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
 sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update</code>
-        </pre>
-                <p>Grazie ai seguenti comandi sono riuscito ad installare effettivamente docker e docker-compose:</p>
+                </pre>
+                <p>Aggiungere il repository di Docker:</p>
                 <pre>
             <code class="language-bash">sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin</code>
         </pre>
@@ -155,7 +158,7 @@ sudo apt-get update</code>
 
             <div class="container">
                 <h2>Generazione di Certificati SSL self-signed</h2>
-                <p>Utilizzando la suite openssl ho generato sia il certificato che il file chiave:</p>
+                <p>Utilizzando OpenSSL, generare il certificato e il file chiave:</p>
                 <pre>
             <code class="language-bash">openssl req -nodes -new -x509 -keyout progetto/keys/ssl-cert-snakeoil.key -out progetto/keys/ssl-cert-snakeoil.pem</code>
         </pre>
@@ -163,7 +166,7 @@ sudo apt-get update</code>
 
             <div class='container'>
                 <h2>Dockerfile</h2>
-                <p>Generazione di un file per la configurazione di un'immagine modificata di php:8.2-apache per permettere l'uso di mysqli, di HTTPS e del redirect automatico da HTTP a HTTPS.</p>
+                <p>Creare un Dockerfile per configurare un'immagine modificata di php:8.2-apache, abilitando mysqli, HTTPS e il redirect automatico da HTTP a HTTPS:</p>
                 <pre>
             <code>FROM php:8.2-apache
 
@@ -184,9 +187,7 @@ RUN docker-php-ext-install mysqli && \
 
             <div class='container'>
                 <h2>compose.yaml</h2>
-                <p>Il file compose.yaml viene usato da Docker come configurazione nell'avviamento e nel mantenimento di applicazioni multi-container.</p>
-                <p>Nello specifico questo compose.yaml serve ad inizializzare due container (un web server e un database) connessi fra di loro da una Docker network.</p>
-                <p>Inoltre vengono specificate alcune variabili di sistema per il database e la posizione della cartella contenente lo script sql di inizializzazione.</p>
+                <p>Il file compose.yaml configura l'avvio e il mantenimento di applicazioni multi-container. In questo caso, viene inizializzato un web server e un database collegati tramite una Docker network. Inoltre, specifica alcune variabili di ambiente per il database e la posizione della cartella contenente lo script SQL di inizializzazione.</p>
                 <pre>
             <code class="language-yaml">services:
     php-app:
@@ -216,10 +217,11 @@ networks:
 
             <div class='container'>
                 <h2>Avviamento dei container</h2>
-                <p>Utilizzando il comando "docker compose" possiamo infine avviare l'applicazione.</p>
+                <p>Utilizzare il comando docker compose per avviare l'applicazione:</p>
                 <pre>
             <code>sudo docker compose up -d</code>
         </pre>
+                <p>Questo comando avvierà i container in background, rendendo l'applicazione pronta per l'uso.</p>
             </div>
         </div>
 
@@ -229,31 +231,31 @@ networks:
                 <ul class="list-unstyled">
                     <li>
                         <h5>Docker: </h5>
-                        <p>Piattaforma di containerizzazione che semplifica lo sviluppo, la distribuzione e la gestione delle applicazioni.</p>
+                        <p>Una piattaforma di containerizzazione che facilita lo sviluppo, la distribuzione e la gestione delle applicazioni.</p>
                     </li>
                     <li>
                         <h5>Dockerfile: </h5>
-                        <p>Un file di testo con istruzioni per creare un'immagine Docker</p>
+                        <p>Un file di testo che contiene le istruzioni necessarie per costruire un'immagine Docker.</p>
                     </li>
                     <li>
                         <h5>Docker Compose: </h5>
-                        <p>Semplifica la gestione di applicazioni multi-container.</p>
+                        <p>Strumento che semplifica la configurazione e la gestione di applicazioni multi-container.</p>
                     </li>
                     <li>
                         <h5>Docker Networks: </h5>
-                        <p>Permettono ai container di comunicare in modo sicuro e isolato. Le ho usate per creare una rete privata in cui i container scambiano dati</p>
+                        <p>Forniscono un mezzo sicuro e isolato per la comunicazione tra container. Utilizzate per creare una rete privata per lo scambio di dati tra i container.</p>
                     </li>
                     <li>
                         <h5>PHP: </h5>
-                        <p>Linguaggio di programmazione utilizzato per lo sviluppo di pagine web dinamiche.</p>
+                        <p>Linguaggio di programmazione utilizzato per creare pagine web dinamiche.</p>
                     </li>
                     <li>
                         <h5>Apache: </h5>
-                        <p>Server web open source ampiamente adottato per la distribuzione di siti e applicazioni web dinamiche.</p>
+                        <p>Server web open source utilizzato per la distribuzione di siti e applicazioni web.</p>
                     </li>
                     <li>
                         <h5>Bootstrap</h5>
-                        <p>Framework front-end ampiamente usato per lo sviluppo di interfacce web responsive e stilisticamente gradevoli.</p>
+                        <p>Framework front-end che facilita lo sviluppo di interfacce web responsive e esteticamente gradevoli.</p>
                     </li>
                 </ul>
             </div>
